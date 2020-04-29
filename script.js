@@ -17,6 +17,7 @@ form.addEventListener("submit", (e) => {
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest/${term}`);
   const data = await res.json();
-
   showData(data);
 }
+
+function showData(data) {}
