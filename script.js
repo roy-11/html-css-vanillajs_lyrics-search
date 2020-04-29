@@ -57,3 +57,27 @@ async function getMoreSongs(url) {
   const data = await res.json();
   showData(data);
 }
+
+result.addEventListener("click", (e) => {
+  const clickedEl = e.target;
+
+  if (clickedEl.tagName === "BUTTON") {
+    const artist = clickedEl.getAttribute("data-artist").replace(/ /gi, "");
+    const songTitle = clickedEl.getAttribute("data-songtitle").replace(/ /gi, "");
+    getLyrics(artist, songTitle);
+  }
+});
+
+async function getLyrics(artist, songTitle) {
+  const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}`);
+  let { lyrics } = await res.json();
+
+  lyrics = lyrics.replace(/(\r\n|\n|\r)/gi, "<br>");
+
+  result.innerHTML = `
+    <h2><strong>${artist}</strong> - ${songTitle}</h2>
+    <span>${lyrics}</span>
+  `;
+
+  more.innerHTML = "";
+}
